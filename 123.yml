@@ -1,0 +1,46 @@
+agent:
+  name: MyMultiTaskAgent
+  description: Configure Docker Container, Node.js, Ubuntu Linux, and PowerShell
+  inputs:
+    - name: containerName
+      type: string
+    - name: imageName
+      type: string
+    - name: nodejsScript
+      type: string
+    - name: linuxScript
+      type: string
+    - name: powershellScript
+      type: string
+  outputs:
+    - name: dockerSuccess
+      type: boolean
+    - name: dockerError
+      type: string
+    - name: nodejsSuccess
+      type: boolean
+    - name: nodejsError
+      type: string
+    - name: linuxSuccess
+      type: boolean
+    - name: linuxError
+      type: string
+    - name: powershellSuccess
+      type: boolean
+    - name: powershellError
+      type: string
+  script: |
+    # Configure Docker container
+    docker run --name $containerName -d $imageName
+
+    # Run Node.js script
+    echo "Running Node.js script..."
+    node -e "$nodejsScript"
+
+    # Configure Ubuntu Linux
+    echo "Running Linux script..."
+    $linuxScript
+
+    # Execute PowerShell script
+    Write-Host "Running PowerShell script..."
+    Invoke-Expression -Command $powershellScript
